@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>اتعابك + — استرجاع ضرائب وسحب توفيرات بسهولة</title>
+  <meta name="description" content="اتعابك+ تساعد الموظفين في إسرائيل على استرجاع ضرائبهم وسحب توفيراتهم من شركات التأمين بسرعة وبأقل نسبة ضريبة ممكنة. تواصل واتساب الآن!" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--brand:#1b4b8f;--brand-2:#0f7ac9;--accent:#19c37d;--bg:#f6f9ff;--text:#0b1020}
+    *{box-sizing:border-box}
+    html,body{margin:0 !important;padding:0 !important;overflow-x:hidden;width:100%;scroll-behavior:smooth}
+    body{font-family:"Almarai",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;background:var(--bg);color:var(--text);line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    img,svg,video{max-width:100%;height:auto}
+    input,select,textarea{font-size:16px;width:100%;padding:14px 16px;border:1px solid #d7e2f2;border-radius:14px;font-family:"Almarai",sans-serif}
+
+    /* Layout */
+    .container{max-width:1120px;margin:0 auto;padding:0 18px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:14px;font-weight:700;font-size:16px;letter-spacing:0.3px;transition:transform .2s,box-shadow .2s;white-space:nowrap;min-height:46px;cursor:pointer;font-family:"Almarai",sans-serif}
+    .btn-primary{background:var(--brand-2);color:#fff;box-shadow:0 6px 16px rgba(15,122,201,.25)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+    .btn-ghost:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(27,75,143,.12)}
+
+    /* Header */
+    header{position:sticky;top:0;background:#ffffffcc;backdrop-filter:saturate(180%) blur(8px);z-index:9;border-bottom:1px solid #e9eef9;box-shadow:0 4px 20px rgba(10,20,40,.04)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 0;gap:10px;flex-wrap:wrap}
+    .brand img{height:50px;max-width:170px}
+    .nav-actions{display:flex;gap:10px}
+
+    /* Trust strip */
+    .trust{background:linear-gradient(90deg,#f1f6ff, #eef9f3);border-bottom:1px solid #e6eef8}
+    .trust .row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 0;color:#274060;font-weight:700;font-size:13px}
+    .trust .row span{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e6eef8;border-radius:999px;padding:6px 10px}
+
+    /* Hero */
+    .hero{padding:42px 0 30px;background:radial-gradient(1200px 400px at 50% -100px,#eaf3ff,transparent 60%)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+    .kicker{color:var(--brand-2);font-weight:800;font-size:13px;margin-bottom:6px;letter-spacing:.3px}
+    h1.title{font-size:34px;line-height:1.25;margin:0 0 12px;font-weight:800;color:var(--text)}
+    .subtitle{font-size:16.5px;color:#4b5565;margin:0 0 16px}
+    .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 0;padding-right:0}
+    .checks li{list-style:none;background:#fff;border:1px solid #e8eef8;border-radius:12px;padding:8px 10px;font-weight:700;text-align:right}
+
+    /* Sections */
+    .card{background:#fff;border:1px solid #e8eef8;border-radius:18px;padding:20px;box-shadow:0 6px 20px rgba(10,41,80,.05)}
+
+    /* CTA band */
+    .cta{margin:20px 0 0;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;border-radius:16px;padding:16px}
+    .cta .row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+
+    /* Footer */
+    footer{padding:28px 0;color:#6b7a90;font-size:14px}
+
+    /* Floating WhatsApp */
+    .wa-float{position:fixed;left:16px;bottom:16px;background:#25D366;color:#fff;border-radius:50px;padding:12px 16px;font-weight:800;display:flex;gap:8px;align-items:center;box-shadow:0 12px 30px rgba(0,0,0,.2);z-index:10;font-size:15px}
+
+    /* Anti-overflow & honeypot */
+    .hp-input{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+    /* Carousel */
+    .carousel-container{position:relative;max-width:100%}
+    .carousel{position:relative;overflow:hidden;border-radius:14px;box-shadow:0 8px 24px rgba(10,41,80,.1)}
+    .carousel-slides{position:relative;width:100%;height:400px}
+    .carousel-slide{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease-in-out;border-radius:14px}
+    .carousel-slide.active{opacity:1}
+    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:none;font-size:24px;font-weight:bold;color:var(--brand);padding:12px 16px;border-radius:50%;cursor:pointer;transition:background .3s,transform .2s;z-index:2}
+    .carousel-btn:hover{background:#fff;transform:translateY(-50%) scale(1.1)}
+    .prev-btn{left:15px}
+    .next-btn{right:15px}
+    .carousel-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+    .dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.6);cursor:pointer;transition:background .3s}
+    .dot.active,.dot:hover{background:#fff}
+
+    /* Responsive */
+    @media (max-width:1100px){.hero-grid{grid-template-columns:1fr}}
+    @media (max-width:768px){
+      .nav{flex-direction:column;align-items:center;gap:6px}
+      .brand{width:100%;display:flex;justify-content:center;margin-bottom:4px}
+      .nav-actions{width:100%;display:flex;flex-direction:column;gap:8px}
+      .nav-actions .btn{width:100%;max-width:260px;margin:0 auto}
+      .checks{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .brand img{height:44px;max-width:140px}
+      h1.title{font-size:26px;line-height:1.25}
+      .btn{width:100%}
+      .carousel-slides{height:300px}
+      .carousel-btn{font-size:18px;padding:8px 12px}
+      .prev-btn{left:10px}
+      .next-btn{right:10px}
+    }
+  html{scroll-behavior:smooth}
+  #lead{scroll-margin-top:88px}
+  </style>
+</head>
+<body>
+  <!-- WhatsApp quick action -->
+  <a class="wa-float" href="https://wa.me/972522486970?text=%D8%A7%D8%B1%D9%8A%D8%AF%20%D9%81%D8%AD%D8%B5%D8%A7%D9%8B%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A7%D9%8B%20%D9%84%D8%A7%D8%B3%D8%AA%D8%B1%D8%AC%D8%A7%D8%B9%20%D8%A7%D9%84%D8%B6%D8%B1%D8%A7%D8%A6%D8%A8%20%D9%88%D8%B3%D8%AD%D8%A8%20%D8%A7%D9%84%D8%AA%D9%88%D9%81%D9%8A%D8%B1%D8%A7%D8%AA" target="_blank">💬 واتساب</a>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/All-03-+no+bg.svg" alt="اتعابك+" />
+      </div>
+
+    </div>
+
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="kicker">استرجاع ضرائب • سحب توفيرات</div>
+        <h1 class="title">مصرياتك مش لازم تضلَّها عند شركة التأمين.</h1>
+        <p class="subtitle">إذا اشتغلت بأكثر من محل، أو خلصت شغل — منفحص لك مجاناً إمكانية سحب التوفيرَات واتعابك <b>بأقل نسبة ممكنة</b>.</p>
+        <ul class="checks">
+          <li>استرجاع ضرائب للموظفين اللي اشتغلوا بأكثر من محل</li>
+          <li>سحب صناديق: קרן פנסיה / קופות גמל / קרן השתלמות</li>
+          <li>سحب توفيرات الأولاد بعد 18</li>
+        </ul>
+        <div class="highlight-box" style="margin:16px 0;background:linear-gradient(135deg,#19c37d,#0f7ac9);color:#fff;padding:14px 18px;border-radius:12px;text-align:center;font-weight:700;font-size:15px;box-shadow:0 4px 16px rgba(25,195,125,.25)">
+          💰 سحب أتعاب بـ 0 ضرائب أو بأقل نسبة ممكنة! 
+        </div>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn btn-primary" href="#lead">ابدأ الفحص الآن</a>
+          <a class="btn btn-ghost" href="https://wa.me/972522486970" target="_blank">سؤال سريع عبر واتساب</a>
+        </div>
+      </div>
+      <div class="carousel-container">
+        <div class="carousel">
+          <div class="carousel-slides">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post1.jpg" alt="نتائج استرجاع الضرائب 1" class="carousel-slide active">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post2.jpg" alt="نتائج استرجاع الضرائب 2" class="carousel-slide">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post3.jpg" alt="نتائج استرجاع الضرائب 3" class="carousel-slide">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post4.jpg" alt="نتائج استرجاع الضرائب 4" class="carousel-slide">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post5.jpg" alt="نتائج استرجاع الضرائب 5" class="carousel-slide">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post6.jpg" alt="نتائج استرجاع الضرائب 6" class="carousel-slide">
+            <img src="https://irp.cdn-website.com/a23be82c/dms3rep/multi/Results+-+Post10.png" alt="نتائج استرجاع الضرائب 7" class="carousel-slide">
+          </div>
+          <button class="carousel-btn prev-btn" onclick="changeSlide(-1)">‹</button>
+          <button class="carousel-btn next-btn" onclick="changeSlide(1)">›</button>
+          <div class="carousel-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Lead Form (Zapier) -->
+  <section class="container" id="lead" style="padding:26px 0">
+    <div class="card">
+      <h3 style="margin-top:0">فحص مجاني خلال دقيقتين</h3>
+      <form id="leadForm" dir="rtl">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+          <input type="text" name="name" placeholder="الاسم الكامل" required>
+          <input type="tel"  name="phone" placeholder="رقم الهاتف: +972522486970" required style="direction:rtl;text-align:right">
+          <input type="email" name="email" placeholder="البريد الإلكتروني">
+          <input type="text" name="city" placeholder="المدينة" />
+        </div>
+        <textarea name="message" placeholder="اكتب رسالتك" style="margin-top:12px;min-height:100px"></textarea>
+        
+        <!-- optional tracking -->
+        <input type="hidden" name="page" id="page">
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+
+        <!-- honeypot (spam trap) -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp-input">
+
+        <div style="display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap">
+          <button type="submit" class="btn btn-primary">📩 أرسل</button>
+        </div>
+        <p id="leadStatus" style="display:none;margin-top:.5rem;"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <div>© اتعابك + — كل الحقوق محفوظة</div>
+      <div style="display:flex;gap:12px">
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">الشروط</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fill hidden fields for tracking
+    (function(){
+      const params = new URLSearchParams(location.search);
+      document.getElementById('page').value = location.href;
+      document.getElementById('utm_source').value   = params.get('utm_source')   || '';
+      document.getElementById('utm_campaign').value = params.get('utm_campaign') || '';
+    })();
+
+    const form = document.getElementById('leadForm');
+    const statusEl = document.getElementById('leadStatus');
+
+    async function sendData(data){
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const prevText = submitBtn ? submitBtn.textContent : '';
+      if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = '… جارٍ الإرسال'; }
+
+      // enrich data with additional info
+      data.timestamp = new Date().toISOString();
+      data.user_agent = navigator.userAgent;
+      data.referrer = document.referrer;
+      data.page_title = document.title;
+      
+      console.log('Attempting to send data:', data);
+
+      const URL = 'https://hooks.zapier.com/hooks/catch/21315317/uh0biyg/';
+
+      const postJSON = () => fetch(URL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body: JSON.stringify(data) });
+      const postForm = () => fetch(URL, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body: new URLSearchParams(data).toString() });
+      const postBeacon = () => {
+        try{
+          const blob = new Blob([JSON.stringify(data)], {type:'text/plain'});
+          return navigator.sendBeacon(URL, blob);
+        }catch(e){ return false; }
+      };
+      const postFormSubmit = () => {
+        try{
+          const f = document.createElement('form');
+          f.action = URL; f.method = 'POST'; f.target = '_blank'; f.style.display = 'none';
+          for(const [k,v] of Object.entries(data)){
+            const i = document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; f.appendChild(i);
+          }
+          document.body.appendChild(f); f.submit(); setTimeout(()=>f.remove(), 1000);
+          return true;
+        }catch(e){ return false; }
+      };
+
+      try {
+        // 1) Try JSON first (preferred)
+        console.log('Trying JSON method...');
+        try {
+          const r1 = await postJSON();
+          console.log('JSON response:', r1);
+          if(r1 && r1.ok){
+            console.log('JSON success!');
+            statusEl.textContent='✅ تم الإرسال بنجاح! (JSON)';
+            statusEl.style.display='block';
+            form.reset();
+            return;
+          }
+        } catch(jsonError) {
+          console.log('JSON method failed (likely CORS):', jsonError.message);
+        }
+
+        // 2) Try Form-encoded
+        console.log('Trying Form-encoded method...');
+        try {
+          const r2 = await postForm();
+          console.log('Form response:', r2);
+          if(r2 && r2.ok){
+            console.log('Form-encoded success!');
+            statusEl.textContent='✅ تم الإرسال بنجاح! (Form)';
+            statusEl.style.display='block';
+            form.reset();
+            return;
+          }
+        } catch(formError) {
+          console.log('Form-encoded method failed (likely CORS):', formError.message);
+        }
+
+        // 3) Try Beacon (no CORS issues)
+        console.log('Trying Beacon method...');
+        const bOk = postBeacon();
+        if(bOk){
+          console.log('Beacon sent successfully');
+          statusEl.textContent='✅ تم الإرسال (Beacon). راجع Zapier History للتأكد.';
+          statusEl.style.display='block';
+          form.reset();
+          return;
+        }
+
+        // 4) HTML form submit fallback (no CORS issues)
+        console.log('Trying HTML form submit fallback...');
+        const fsOk = postFormSubmit();
+        if(fsOk){
+          console.log('Form submit method executed');
+          statusEl.textContent='✅ تم الإرسال عبر النموذج التقليدي (فتح نافذة جديدة).';
+          statusEl.style.display='block';
+          form.reset();
+          return;
+        }
+
+        statusEl.innerHTML = '❌ تعذر الإرسال عبر جميع الطرق.<br><small>للاختبار من localhost: تحقق من Zapier Task History أو ارفع الموقع على domain حقيقي.</small>';
+        statusEl.style.display = 'block';
+      } catch(e){
+        console.error('Send error', e);
+        statusEl.innerHTML = '❌ فشل الاتصال (CORS Policy).<br><small>هذا طبيعي عند الاختبار من localhost. الموقع سيعمل بشكل طبيعي على domain حقيقي.</small>';
+        statusEl.style.display = 'block';
+      } finally {
+        if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = prevText; }
+      }
+    }
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      
+      // Honeypot spam protection
+      if (form.website && form.website.value) {
+        console.log('Spam detected via honeypot');
+        return;
+      }
+      
+      // Basic validation
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      if (!data.name || !data.phone) {
+        statusEl.textContent = '❌ يرجى ملء الحقول المطلوبة (الاسم ورقم الهاتف)';
+        statusEl.style.display = 'block';
+        return;
+      }
+      
+      console.log('Form submitted with data:', data);
+      sendData(data);
+    });
+
+    // Carousel functionality
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      // Remove active class from all slides and dots
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      // Add active class to current slide and dot
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      currentSlideIndex += direction;
+      
+      if (currentSlideIndex >= slides.length) {
+        currentSlideIndex = 0;
+      } else if (currentSlideIndex < 0) {
+        currentSlideIndex = slides.length - 1;
+      }
+      
+      showSlide(currentSlideIndex);
+    }
+
+    function currentSlide(index) {
+      currentSlideIndex = index - 1;
+      showSlide(currentSlideIndex);
+    }
+
+    // Auto slide every 4 seconds
+    setInterval(() => {
+      changeSlide(1);
+    }, 4000);
+
+    // Ensure initial scroll isn't shifted horizontally in RTL
+    window.addEventListener('load', function(){ document.documentElement.scrollLeft = 0; document.body.scrollLeft = 0; });
+    // Smooth scroll fallback for older Safari/iOS
+    document.addEventListener('click', function(e){
+      const a = e.target.closest('a[href^="#"]');
+      if(!a) return;
+      const id = a.getAttribute('href');
+      if(id.length > 1){
+        const el = document.querySelector(id);
+        if(el){
+          e.preventDefault();
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      }
+    });
+  </script>
+</body>
+</html>

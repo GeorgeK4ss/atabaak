@@ -1,0 +1,6 @@
+# Design files
+*.psd
+*.ai
+
+# System files
+.DS_Store
