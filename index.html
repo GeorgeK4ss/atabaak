@@ -171,7 +171,7 @@
 
   </section>
 
-  <!-- Lead Form -->
+  <!-- Lead Form (Zapier) -->
   <section class="container" id="lead" style="padding:26px 0">
     <div class="card">
       <h3 style="margin-top:0">فحص مجاني خلال دقيقتين</h3>
@@ -226,61 +226,97 @@
       const prevText = submitBtn ? submitBtn.textContent : '';
       if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = '… جارٍ الإرسال'; }
 
-      // Prepare API payload according to your API structure
-      const apiPayload = {
-        name: data.name || '',
-        email: 'GDN@Ataabak.com', // Static email value
-        phone: data.phone || '',
-        country: 'IL', // Fixed value for Israel
-        source: data.utm_source || 'Website Landing Page',
-        assignedTo: 'USER008',
-        tag1: data.city || '',
-        tag2: 'GDN',
-        status: 'Status001',
-        // Additional data in custom fields if needed
-        message: data.message || '',
-        page: data.page || location.href,
-        utm_campaign: data.utm_campaign || '',
-        timestamp: new Date().toISOString(),
-        referrer: document.referrer
-      };
+      // enrich data with additional info
+      data.timestamp = new Date().toISOString();
+      data.user_agent = navigator.userAgent;
+      data.referrer = document.referrer;
+      data.page_title = document.title;
       
-      console.log('Sending data to API:', apiPayload);
+      console.log('Attempting to send data:', data);
 
-      const API_URL = 'https://api-qt7n3qu5sa-uc.a.run.app/leads';
-      const API_KEY = '9fc94694a9b4182ef0a238c5772e1caec4da5c84c3a469c4';
+      const URL = 'https://hooks.zapier.com/hooks/catch/21315317/uh0biyg/';
+
+      const postJSON = () => fetch(URL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body: JSON.stringify(data) });
+      const postForm = () => fetch(URL, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body: new URLSearchParams(data).toString() });
+      const postBeacon = () => {
+        try{
+          const blob = new Blob([JSON.stringify(data)], {type:'text/plain'});
+          return navigator.sendBeacon(URL, blob);
+        }catch(e){ return false; }
+      };
+      const postFormSubmit = () => {
+        try{
+          const f = document.createElement('form');
+          f.action = URL; f.method = 'POST'; f.target = '_blank'; f.style.display = 'none';
+          for(const [k,v] of Object.entries(data)){
+            const i = document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; f.appendChild(i);
+          }
+          document.body.appendChild(f); f.submit(); setTimeout(()=>f.remove(), 1000);
+          return true;
+        }catch(e){ return false; }
+      };
 
       try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': API_KEY
-          },
-          body: JSON.stringify(apiPayload)
-        });
-
-        console.log('API response status:', response.status);
-        
-        if (response.ok) {
-          const result = await response.json();
-          console.log('API success:', result);
-          statusEl.textContent = '✅ تم الإرسال بنجاح!';
-          statusEl.style.display = 'block';
-          statusEl.style.color = '#19c37d';
-          form.reset();
-        } else {
-          const errorText = await response.text();
-          console.error('API error:', errorText);
-          statusEl.textContent = '❌ حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى.';
-          statusEl.style.display = 'block';
-          statusEl.style.color = '#e74c3c';
+        // 1) Try JSON first (preferred)
+        console.log('Trying JSON method...');
+        try {
+          const r1 = await postJSON();
+          console.log('JSON response:', r1);
+          if(r1 && r1.ok){
+            console.log('JSON success!');
+            statusEl.textContent='✅ تم الإرسال بنجاح! (JSON)';
+            statusEl.style.display='block';
+            form.reset();
+            return;
+          }
+        } catch(jsonError) {
+          console.log('JSON method failed (likely CORS):', jsonError.message);
         }
-      } catch(error) {
-        console.error('Send error:', error);
-        statusEl.textContent = '❌ فشل الاتصال. يرجى المحاولة مرة أخرى.';
+
+        // 2) Try Form-encoded
+        console.log('Trying Form-encoded method...');
+        try {
+          const r2 = await postForm();
+          console.log('Form response:', r2);
+          if(r2 && r2.ok){
+            console.log('Form-encoded success!');
+            statusEl.textContent='✅ تم الإرسال بنجاح! (Form)';
+            statusEl.style.display='block';
+            form.reset();
+            return;
+          }
+        } catch(formError) {
+          console.log('Form-encoded method failed (likely CORS):', formError.message);
+        }
+
+        // 3) Try Beacon (no CORS issues)
+        console.log('Trying Beacon method...');
+        const bOk = postBeacon();
+        if(bOk){
+          console.log('Beacon sent successfully');
+          statusEl.textContent='✅ تم الإرسال (Beacon). راجع Zapier History للتأكد.';
+          statusEl.style.display='block';
+          form.reset();
+          return;
+        }
+
+        // 4) HTML form submit fallback (no CORS issues)
+        console.log('Trying HTML form submit fallback...');
+        const fsOk = postFormSubmit();
+        if(fsOk){
+          console.log('Form submit method executed');
+          statusEl.textContent='✅ تم الإرسال عبر النموذج التقليدي (فتح نافذة جديدة).';
+          statusEl.style.display='block';
+          form.reset();
+          return;
+        }
+
+        statusEl.innerHTML = '❌ تعذر الإرسال عبر جميع الطرق.<br><small>للاختبار من localhost: تحقق من Zapier Task History أو ارفع الموقع على domain حقيقي.</small>';
         statusEl.style.display = 'block';
-        statusEl.style.color = '#e74c3c';
+      } catch(e){
+        console.error('Send error', e);
+        statusEl.innerHTML = '❌ فشل الاتصال (CORS Policy).<br><small>هذا طبيعي عند الاختبار من localhost. الموقع سيعمل بشكل طبيعي على domain حقيقي.</small>';
+        statusEl.style.display = 'block';
       } finally {
         if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = prevText; }
       }
