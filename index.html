@@ -245,18 +245,16 @@
         referrer: document.referrer
       };
       
-      console.log('Sending data to API:', apiPayload);
+      console.log('Sending data to webhook:', apiPayload);
 
-      const API_URL = 'https://api-qt7n3qu5sa-uc.a.run.app/leads';
-      const API_KEY = '9fc94694a9b4182ef0a238c5772e1caec4da5c84c3a469c4';
+      // Use webhook endpoint (no CORS issues, API key hidden server-side)
+      const WEBHOOK_URL = '/api/submit-lead';
 
       try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(WEBHOOK_URL, {
           method: 'POST',
-          mode: 'cors',
           headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': API_KEY
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(apiPayload)
         });
@@ -279,16 +277,7 @@
         }
       } catch(error) {
         console.error('Send error:', error);
-        console.error('Error name:', error.name);
-        console.error('Error message:', error.message);
-        
-        // Check if it's a CORS error
-        if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-          console.error('CORS Error: The API needs to allow requests from:', location.origin);
-          statusEl.innerHTML = '❌ خطأ في الاتصال بالخادم (CORS).<br><small>يرجى التأكد من تفعيل CORS على API للسماح بالطلبات من: ' + location.origin + '</small>';
-        } else {
-          statusEl.textContent = '❌ فشل الاتصال. يرجى المحاولة مرة أخرى.';
-        }
+        statusEl.textContent = '❌ فشل الاتصال. يرجى المحاولة مرة أخرى.';
         statusEl.style.display = 'block';
         statusEl.style.color = '#e74c3c';
       } finally {
