@@ -245,16 +245,17 @@
         referrer: document.referrer
       };
       
-      console.log('Sending data to webhook:', apiPayload);
+      console.log('Sending data to API:', apiPayload);
 
-      // Use webhook endpoint (no CORS issues, API key hidden server-side)
-      const WEBHOOK_URL = '/api/submit-lead';
+      const API_URL = 'https://api-qt7n3qu5sa-uc.a.run.app/leads';
+      const API_KEY = '9fc94694a9b4182ef0a238c5772e1caec4da5c84c3a469c4';
 
       try {
-        const response = await fetch(WEBHOOK_URL, {
+        const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-API-Key': API_KEY
           },
           body: JSON.stringify(apiPayload)
         });

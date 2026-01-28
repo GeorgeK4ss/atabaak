@@ -1,8 +1,0 @@
-{
-  "functions": {
-    "api/submit-lead.js": {
-      "memory": 128,
-      "maxDuration": 10
-    }
-  }
-}
