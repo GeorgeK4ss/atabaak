@@ -253,6 +253,7 @@
       try {
         const response = await fetch(API_URL, {
           method: 'POST',
+          mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
             'X-API-Key': API_KEY
@@ -278,7 +279,16 @@
         }
       } catch(error) {
         console.error('Send error:', error);
-        statusEl.textContent = '❌ فشل الاتصال. يرجى المحاولة مرة أخرى.';
+        console.error('Error name:', error.name);
+        console.error('Error message:', error.message);
+        
+        // Check if it's a CORS error
+        if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+          console.error('CORS Error: The API needs to allow requests from:', location.origin);
+          statusEl.innerHTML = '❌ خطأ في الاتصال بالخادم (CORS).<br><small>يرجى التأكد من تفعيل CORS على API للسماح بالطلبات من: ' + location.origin + '</small>';
+        } else {
+          statusEl.textContent = '❌ فشل الاتصال. يرجى المحاولة مرة أخرى.';
+        }
         statusEl.style.display = 'block';
         statusEl.style.color = '#e74c3c';
       } finally {
