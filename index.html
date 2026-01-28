@@ -9,6 +9,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17910039683"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17910039683');
+  </script>
+  
   <style>
     :root{--brand:#1b4b8f;--brand-2:#0f7ac9;--accent:#19c37d;--bg:#f6f9ff;--text:#0b1020}
     *{box-sizing:border-box}
@@ -169,7 +179,6 @@
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
           <input type="text" name="name" placeholder="الاسم الكامل" required>
           <input type="tel"  name="phone" placeholder="رقم الهاتف: +972522486970" required style="direction:rtl;text-align:right">
-          <input type="email" name="email" placeholder="البريد الإلكتروني">
           <input type="text" name="city" placeholder="المدينة" />
         </div>
         <textarea name="message" placeholder="اكتب رسالتك" style="margin-top:12px;min-height:100px"></textarea>
