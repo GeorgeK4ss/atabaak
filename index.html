@@ -179,6 +179,7 @@
         <div style="display:grid;grid-template-columns:1fr;gap:12px">
           <input type="text" name="name" placeholder="الاسم الكامل" required>
           <input type="tel"  name="phone" placeholder="رقم الهاتف: +972522486970" required style="direction:rtl;text-align:right">
+          <input type="text" name="id_number" placeholder="رقم الهوية" required>
           <input type="text" name="city" placeholder="المدينة" />
         </div>
         <textarea name="message" placeholder="اكتب رسالتك" style="margin-top:12px;min-height:100px"></textarea>
@@ -335,8 +336,8 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       
-      if (!data.name || !data.phone) {
-        statusEl.textContent = '❌ يرجى ملء الحقول المطلوبة (الاسم ورقم الهاتف)';
+      if (!data.name || !data.phone || !data.id_number) {
+        statusEl.textContent = '❌ يرجى ملء الحقول المطلوبة (الاسم، رقم الهاتف، رقم الهوية)';
         statusEl.style.display = 'block';
         return;
       }
