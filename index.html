@@ -108,6 +108,15 @@
     }
   html{scroll-behavior:smooth}
   #lead{scroll-margin-top:88px}
+  
+  /* ID Verification Modal */
+  .id-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+  .id-modal.show{display:flex}
+  .id-modal-content{background:#fff;border-radius:18px;padding:32px 24px;max-width:480px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+  .id-modal h3{margin:0 0 16px;font-size:22px;color:var(--brand)}
+  .id-modal p{margin:0 0 24px;font-size:17px;line-height:1.6;color:var(--text)}
+  .id-modal-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .id-modal-buttons .btn{min-width:120px}
   </style>
 </head>
 <body>
@@ -342,8 +351,34 @@
         return;
       }
       
-      console.log('Form submitted with data:', data);
-      sendData(data);
+      // Show ID verification modal
+      const modal = document.getElementById('idModal');
+      const yesBtn = document.getElementById('idYes');
+      const noBtn = document.getElementById('idNo');
+      
+      modal.classList.add('show');
+      
+      // Handle Yes button
+      yesBtn.onclick = () => {
+        modal.classList.remove('show');
+        console.log('Israeli ID confirmed, sending data:', data);
+        sendData(data);
+      };
+      
+      // Handle No button
+      noBtn.onclick = () => {
+        modal.classList.remove('show');
+        statusEl.innerHTML = '❌ نعتذر، هذه الخدمة متاحة فقط لحاملي الهوية الإسرائيلية (الزرقاء)';
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#e74c3c';
+      };
+      
+      // Close modal when clicking outside
+      modal.onclick = (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+        }
+      };
     });
 
     // Carousel functionality
@@ -399,5 +434,17 @@
       }
     });
   </script>
+
+  <!-- ID Verification Modal -->
+  <div class="id-modal" id="idModal">
+    <div class="id-modal-content">
+      <h3>🔵 تأكيد الهوية</h3>
+      <p>هل أنت صاحب هوية زرقاء (إسرائيلية)؟</p>
+      <div class="id-modal-buttons">
+        <button class="btn btn-primary" id="idYes">نعم</button>
+        <button class="btn btn-ghost" id="idNo">لا</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
