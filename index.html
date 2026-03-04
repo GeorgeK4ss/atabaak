@@ -18,7 +18,52 @@
     gtag('js', new Date());
     gtag('config', 'AW-17910039683');
   </script>
-  
+
+  <script>
+  (function(){
+    const BLOCKED_COUNTRY = 'PS';
+    const BLOCKED_ISP_KEYWORDS = [
+      'paltel','jawwal','ooredoo palestine','hadara',
+      'palestine telecommunications','wataniya mobile','palnet','vision net'
+    ];
+
+    function containsBlockedKeyword(str){
+      if(!str) return false;
+      const lower = str.toLowerCase();
+      return BLOCKED_ISP_KEYWORDS.some(function(kw){ return lower.indexOf(kw) !== -1; });
+    }
+
+    function blockUser(){
+      window.__GEO_BLOCKED = true;
+      const section = document.getElementById('lead');
+      if(section) section.style.display = 'none';
+      const btn = document.querySelector('#leadForm button[type="submit"]');
+      if(btn) btn.disabled = true;
+    }
+
+    function checkAndBlock(countryCode, isp, org){
+      if((countryCode || '').toUpperCase() === BLOCKED_COUNTRY) return blockUser();
+      if(containsBlockedKeyword(isp) || containsBlockedKeyword(org)) return blockUser();
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      fetch('https://ipapi.co/json/')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          checkAndBlock(d.country_code, d.org, d.org);
+        })
+        .catch(function(){
+          fetch('http://ip-api.com/json/?fields=countryCode,isp,org')
+            .then(function(r){ return r.json(); })
+            .then(function(d){
+              checkAndBlock(d.countryCode, d.isp, d.org);
+            })
+            .catch(function(){ /* both APIs failed — fail open */ });
+        });
+    });
+  })();
+  </script>
+
   <style>
     :root{--brand:#1b4b8f;--brand-2:#0f7ac9;--accent:#19c37d;--bg:#f6f9ff;--text:#0b1020}
     *{box-sizing:border-box}
@@ -335,6 +380,8 @@
     form.addEventListener('submit', (e)=>{
       e.preventDefault();
       
+      if (window.__GEO_BLOCKED) return;
+
       // Honeypot spam protection
       if (form.website && form.website.value) {
         console.log('Spam detected via honeypot');
